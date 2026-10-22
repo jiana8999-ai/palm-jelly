@@ -16,6 +16,15 @@ This repository is committed and uploaded incrementally as features are built.
 
 4. Fourth upload: ring collision tests, deployment configuration and final usability fixes.
 
+5. Fifth upload: configure the VS Code workflow to push each new commit to GitHub.
+
+## Work in VS Code / 在 VS Code 中继续制作
+Open this `palm-jelly` folder in VS Code. Source Control → Graph shows the same commit history as GitHub.
+
+打开本项目文件夹，在左侧「源代码管理 → 图形」查看历次提交。每完成一部分：保存文件 → 暂存本次修改 → 输入修改说明 → 提交。此项目已设置提交后自动推送到 GitHub；首次使用可能需要登录 GitHub。上传完成后，`main` 与 `origin/main` 会指向同一条记录。
+
+Saving a file alone does not create a commit. If the network or sign-in fails, the commit stays safe locally; use Push again when connected. Pull remote changes before editing when working from another computer. GitHub uploads do not automatically redeploy the current Cloudflare Direct Upload site.
+
 ## Run locally
 Requires Node.js 18+. Run `npm run dev` then open http://127.0.0.1:4173.
 Run `npm test` for ring geometry and hand mapping checks. `npm run build` creates `dist/`.
