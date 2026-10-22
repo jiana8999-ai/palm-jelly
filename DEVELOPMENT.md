@@ -24,3 +24,5 @@ Continue using the existing GitHub repository and Cloudflare Pages project `palm
 - Eleventh upload: replaced the simplified renderer with original artwork screens, aligned interactive hotspots, and a separate moving jellyfish/game plate. The dynamic game plate and sprite are image-generated derivatives, not a claim of pixel-identical source layers.
 - Twelfth upload: extracted only audio from the user-supplied recording, removed the first three seconds, added a short fade-in, and tested camera onboarding, practice, pause, lost tracking and three-ring completion. Original recording/video is not published.
 - Live camera detection still needs a human hand in front of the camera for end-to-end physical testing.
+
+- Thirteenth upload: user clarified their supplied recording was already trimmed. Restored the complete audio track without trimming or fade, extracting AAC losslessly and keeping playback at a lower volume.
