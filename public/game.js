@@ -1,14 +1,14 @@
 import {audio} from './audio.js';
-const $=id=>document.getElementById(id),ctx=$('ocean').getContext('2d'),sprite=new Image();sprite.src='assets/jelly-sprite.png';const oceanPlate=new Image();oceanPlate.src='assets/ocean-plate.png';
+const $=id=>document.getElementById(id),ctx=$('ocean').getContext('2d'),sprite=new Image();sprite.src='assets/jelly-sprite.webp';const oceanPlate=new Image();oceanPlate.src='assets/ocean-plate.webp';
 let mode='home',paused=false,tracking=false,active=0,hold=0,handHold=0,last=0,t=0,stop=()=>{},start=()=>{},jelly={x:365,y:490},target={...jelly},particles=[];
 const goals=[{x:600,y:308,r:138},{x:978,y:600,r:94},{x:1348,y:319,r:84}],practiceGoal={x:1117,y:408,r:115};
 function scale(){$('stage').style.transform=`scale(${Math.min(innerWidth/1672,innerHeight/941)})`;document.body.style.width='100%'}addEventListener('resize',scale);scale();
 function hit(id,label,x,y,w,h,fn){const b=document.createElement('button');b.id=id;b.className='hit';b.setAttribute('aria-label',label);Object.assign(b.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px'});b.onclick=fn;$('ui').append(b);return b}
 function copy(html,x,y,w,cls=''){const e=document.createElement('div');e.className='copy '+cls;e.innerHTML=html;Object.assign(e.style,{left:x+'px',top:y+'px',width:w+'px'});$('ui').append(e);return e}
-function patch(file,x,y,w,h){const e=document.createElement('div');e.className='patch';Object.assign(e.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px',backgroundImage:`url(assets/storyboards/${file}.png)`,backgroundPosition:`-${x}px -${y}px`});$('ui').append(e)}
+function patch(file,x,y,w,h){const e=document.createElement('div');e.className='patch';Object.assign(e.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px',backgroundImage:`url(assets/storyboards/${file}.webp)`,backgroundPosition:`-${x}px -${y}px`});$('ui').append(e)}
 function status(s){$('status').textContent=s;$('status').classList.toggle('hidden',!s)}
 function help(){if(['playing','practice'].includes(mode))paused=true;$('help-dialog').showModal()}
-function show(m){mode=m;document.body.dataset.screen=m;$('ui').replaceChildren();status('');$('art').src=['playing','practice'].includes(m)?'assets/ocean-plate.png':`assets/storyboards/${m}.png`;
+function show(m){mode=m;document.body.dataset.screen=m;$('ui').replaceChildren();status('');$('art').src=['playing','practice'].includes(m)?'assets/ocean-plate.webp':`assets/storyboards/${m}.webp`;
 if(m==='home'){hit('start','Start / 开始',659,800,356,77,prepare);hit('help','How to play',1473,37,157,49,help)}
 if(m==='camera')hit('home','Home / 返回首页',1564,30,75,75,home);
 if(m==='hand')hit('home','Home / 返回首页',25,22,260,65,home);
