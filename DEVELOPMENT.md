@@ -18,3 +18,9 @@ Camera processing runs locally using the existing bundled MediaPipe model. There
 
 Continue using the existing GitHub repository and Cloudflare Pages project `palm-jelly`. GitHub updates and Cloudflare Direct Upload are separate operations. Keep the same production URL, https://palm-jelly.pages.dev/ .
 4. Ninth upload: fixed a module parsing error caught in browser QA; added an end-to-end state-machine test for palm recognition, required practice, paused movement, lost tracking, three-ring completion and return-home cleanup. Verified five tests and adjusted tablet-size header spacing.
+
+## October 22 — approved storyboard restoration
+- Tenth upload: preserved all six user-approved illustrations as source artwork.
+- Eleventh upload: replaced the simplified renderer with original artwork screens, aligned interactive hotspots, and a separate moving jellyfish/game plate. The dynamic game plate and sprite are image-generated derivatives, not a claim of pixel-identical source layers.
+- Twelfth upload: extracted only audio from the user-supplied recording, removed the first three seconds, added a short fade-in, and tested camera onboarding, practice, pause, lost tracking and three-ring completion. Original recording/video is not published.
+- Live camera detection still needs a human hand in front of the camera for end-to-end physical testing.
