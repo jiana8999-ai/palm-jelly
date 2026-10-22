@@ -1,4 +1,4 @@
-// Original synthesized interaction sounds. No third-party recordings are included.
+// Original interaction sounds plus the complete audio supplied by the user.
 const settings={muted:localStorage.getItem('palm-jelly-muted')==='true'};
 let ctx,master,motionGain,motionFilter,motionSource,bubbleTimer,lastBubble=0,music=null;
 export const audio={
@@ -10,7 +10,13 @@ export const audio={
  toggle(){settings.muted=!settings.muted;localStorage.setItem('palm-jelly-muted',String(settings.muted));if(master)master.gain.setTargetAtTime(settings.muted?0:.65,ctx.currentTime,.04);if(music)music.muted=settings.muted;this.updateButton();return settings.muted},
  updateButton(){const b=document.getElementById('sound');b.textContent=settings.muted?'♪̸':'♫';b.setAttribute('aria-label',settings.muted?'Turn sound on / 开启声音':'Turn sound off / 关闭声音');b.setAttribute('aria-pressed',String(!settings.muted));b.title=settings.muted?'Sound off / 声音已关闭':'Sound on / 声音已开启'},
  suspend(){ctx?.suspend();music?.pause()},resume(){if(ctx&&!settings.muted)ctx.resume();if(music&&!settings.muted)music.play().catch(()=>{})},
- // Supply a cleared/user-owned audio URL here. The source recording remains unchanged.
- async loadMusic(url,{start=3,end=null}={}){music=new Audio(url);music.volume=.22;music.muted=settings.muted;music.preload='auto';music.addEventListener('loadedmetadata',()=>{music.currentTime=Math.min(start,Math.max(0,music.duration-.1))});music.addEventListener('timeupdate',()=>{if(end&&music.currentTime>=end)music.currentTime=start});music.addEventListener('ended',()=>{music.currentTime=start;music.play().catch(()=>{})});await music.play()}
+ playMusic(){if(!music||settings.muted)return Promise.resolve();return music.play().catch(()=>{})},
+ async loadMusic(url,{start=0}={}){
+  if(!music){music=new Audio();music.preload='auto';music.loop=true;music.volume=.22;music.muted=settings.muted;music.src=url;
+   if(start>0)music.addEventListener('loadedmetadata',()=>{music.currentTime=start},{once:true});
+   music.load();
+  }
+  if(!settings.muted)await music.play();
+ }
 };
-document.addEventListener('pointerdown',()=>audio.unlock(),{once:true});document.addEventListener('keydown',()=>audio.unlock(),{once:true});document.addEventListener('click',async event=>{const b=event.target.closest('button');if(!b||b.disabled)return;await audio.unlock();if(b.id==='sound'){audio.toggle();if(!settings.muted)audio.cue('click')}else audio.cue('click')});audio.updateButton();
+document.addEventListener('pointerdown',()=>audio.unlock(),{once:true});document.addEventListener('keydown',()=>audio.unlock(),{once:true});document.addEventListener('click',async event=>{const b=event.target.closest('button');if(!b||b.disabled)return;await audio.unlock();if(b.id==='sound'){audio.toggle();if(!settings.muted){audio.playMusic();audio.cue('click')}}else audio.cue('click')});audio.updateButton();

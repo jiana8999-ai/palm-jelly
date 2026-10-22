@@ -2,7 +2,14 @@ import {audio} from './audio.js';
 const $=id=>document.getElementById(id),ctx=$('ocean').getContext('2d'),sprite=new Image();sprite.src='assets/jelly-sprite.webp';const oceanPlate=new Image();oceanPlate.src='assets/ocean-plate.webp';
 let mode='home',paused=false,tracking=false,active=0,hold=0,handHold=0,last=0,t=0,stop=()=>{},start=()=>{},jelly={x:365,y:490},target={...jelly},particles=[];
 const goals=[{x:600,y:308,r:138},{x:978,y:600,r:94},{x:1348,y:319,r:84}],practiceGoal={x:1117,y:408,r:115};
-function scale(){$('stage').style.transform=`scale(${Math.min(innerWidth/1672,innerHeight/941)})`;document.body.style.width='100%'}addEventListener('resize',scale);scale();
+function scale(){
+ const sx=innerWidth/1672,sy=innerHeight/941;
+ $('stage').style.transform=`scale(${sx},${sy})`;
+ const dpr=Math.min(globalThis.devicePixelRatio||1,3),canvas=$('ocean');
+ canvas.width=Math.round(innerWidth*dpr);canvas.height=Math.round(innerHeight*dpr);
+ ctx.setTransform(canvas.width/1672,0,0,canvas.height/941,0,0);
+ ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+}addEventListener('resize',scale);scale();
 function hit(id,label,x,y,w,h,fn){const b=document.createElement('button');b.id=id;b.className='hit';b.setAttribute('aria-label',label);Object.assign(b.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px'});b.onclick=fn;$('ui').append(b);return b}
 function copy(html,x,y,w,cls=''){const e=document.createElement('div');e.className='copy '+cls;e.innerHTML=html;Object.assign(e.style,{left:x+'px',top:y+'px',width:w+'px'});$('ui').append(e);return e}
 function patch(file,x,y,w,h){const e=document.createElement('div');e.className='patch';Object.assign(e.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px',backgroundImage:`url(assets/storyboards/${file}.webp)`,backgroundPosition:`-${x}px -${y}px`});$('ui').append(e)}
@@ -32,7 +39,9 @@ if(['practice','playing'].includes(mode)){if(oceanPlate.complete&&oceanPlate.nat
 else audio.setMotion(0);
 if(Math.random()<dt*2)particles.push({x:150+Math.random()*1370,y:850,r:3+Math.random()*6,life:6});particles=particles.filter(p=>(p.life-=dt)>0);ctx.strokeStyle='#ffffffb0';ctx.lineWidth=2;for(const p of particles){p.y-=dt*35;ctx.beginPath();ctx.arc(p.x+Math.sin(t+p.y)*2,p.y,p.r,0,Math.PI*2);ctx.stroke()}requestAnimationFrame(tick)}
 $('resume').onclick=()=>pause(false);$('return').onclick=home;$('close-help').onclick=()=>$('help-dialog').close();$('help-dialog').addEventListener('close',()=>{paused=false});document.addEventListener('visibilitychange',()=>{if(document.hidden){if(['playing','practice'].includes(mode))pause(true);audio.suspend()}else audio.resume()});addEventListener('pagehide',()=>stop());
-let musicStarted=false;document.addEventListener('pointerdown',()=>{if(!musicStarted){musicStarted=true;audio.loadMusic('assets/music.m4a',{start:0}).catch(()=>{musicStarted=false})}});
+// Preload and request playback immediately. Browsers may require the first gesture.
+audio.loadMusic('assets/music.m4a',{start:0}).catch(()=>{});
+for(const event of ['pointerdown','keydown'])document.addEventListener(event,()=>audio.playMusic(),{passive:true});
 show('home');requestAnimationFrame(tick);
 export const game={status,home,prepare,handReady(){show('hand');handHold=0;tracking=false},isPlaying:()=>['hand','practice','playing'].includes(mode),isPaused:()=>paused,setStop(fn){stop=fn},setStart(fn){start=fn},setTracking(found,pos){tracking=found;if($('track-label'))$('track-label').textContent=found?'● Hand detected / 已识别':'○ Raise your hand / 举起手掌';if(!found){handHold=0;hold=0;if(['playing','practice'].includes(mode))status('Raise your palm / 举起手掌，继续游动')}else{status('');if(pos)target={x:Math.max(90,Math.min(1582,pos.x*1672)),y:Math.max(180,Math.min(745,pos.y*941))}}}};
 // Local-only storyboard review; never enables camera bypass on the deployed site.
