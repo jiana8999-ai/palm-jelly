@@ -10,3 +10,6 @@ A webcam-controlled underwater mini-game. Move your palm to guide a jellyfish th
 This repository is committed and uploaded incrementally as features are built.
 
 1. Initial upload: project structure, launch page and local preview.
+
+2. Second upload: canvas ocean, animated jellyfish, staggered ring sizes and keyboard gameplay.
+3. Third upload: local webcam palm tracking, lost-hand pause and camera error recovery.
