@@ -16,7 +16,7 @@ function copy(html,x,y,w,cls=''){const e=document.createElement('div');e.classNa
 function patch(file,x,y,w,h){const e=document.createElement('div');e.className='patch';Object.assign(e.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px',backgroundImage:`url(assets/storyboards/${file}.webp)`,backgroundPosition:`-${x}px -${y}px`});$('ui').append(e)}
 function status(s){$('status').textContent=s;$('status').classList.toggle('hidden',!s)}
 function help(){if(['playing','practice'].includes(mode))paused=true;$('help-dialog').showModal()}
-function show(m){passage=null;mode=m;document.body.dataset.screen=m;$('ui').replaceChildren();status('');$('art').src=['playing','practice'].includes(m)?'assets/ocean-plate.webp':`assets/storyboards/${m}.webp`;
+function show(m){passage=null;mode=m;document.body.dataset.screen=m;$('ui').replaceChildren();status('');$('art').src=['playing','practice'].includes(m)?'assets/ocean-plate.webp':`assets/storyboards/${m==='home'?'home-hd':m}.webp`;
 if(m==='home'){hit('start','Start / 开始',659,800,356,77,prepare);hit('help','How to play',1473,37,157,49,help)}
 if(m==='camera')hit('home','Home / 返回首页',1564,30,75,75,home);
 if(m==='hand')hit('home','Home / 返回首页',25,22,260,65,home);

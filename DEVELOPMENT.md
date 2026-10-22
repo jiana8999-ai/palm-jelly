@@ -26,3 +26,8 @@ Continue using the existing GitHub repository and Cloudflare Pages project `palm
 - Live camera detection still needs a human hand in front of the camera for end-to-end physical testing.
 
 - Thirteenth upload: user clarified their supplied recording was already trimmed. Restored the complete audio track without trimming or fade, extracting AAC losslessly and keeping playback at a lower volume.
+
+## October 23 — full-screen, clarity, hoop depth and immediate music
+- Fifteenth upload: independently fit the authored stage to viewport width and height, removing letterbox bands; size Canvas backing pixels for device pixel ratio; preload and attempt music at load, retry on first gesture if browser autoplay is blocked. No delay or audio trim.
+- Sixteenth upload: tilted elliptical rings rendered as far/near rims around the jellyfish, a 1.15-second crossing before scoring, pause/lost-hand handling, and geometry/flow checks.
+- Seventeenth upload: clarity-enhanced homepage artwork, original composition retained. Raster art remains 1672×941; dynamic rendering now uses the actual display pixel count. No unsupported 4K-source claim.
