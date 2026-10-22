@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{fitsRing,palmPosition,RINGS,JELLY_RADIUS}from'../public/logic.js';
+test('rings alternate in height and gradually shrink',()=>{assert(RINGS[1].y-RINGS[0].y>.3);assert(RINGS[1].y-RINGS[2].y>.3);assert(RINGS[0].r>RINGS[1].r&&RINGS[1].r>RINGS[2].r);assert(RINGS.every(r=>r.r>JELLY_RADIUS));});
+test('whole jellyfish must fit; touching from outside does not complete',()=>{const r={x:100,y:100,r:50};assert(fitsRing({x:100,y:100},r));assert(!fitsRing({x:112,y:100},r));assert(fitsRing({x:111,y:100},r));});
+test('camera mapping is mirrored and clamped',()=>{const h=Array.from({length:21},()=>({x:.2,y:.5}));const left=palmPosition(h);h.forEach(p=>p.x=.8);assert(left.x>palmPosition(h).x);h.forEach(p=>{p.x=-1;p.y=4});const p=palmPosition(h);assert(p.x<=.94&&p.y<=.85);});
