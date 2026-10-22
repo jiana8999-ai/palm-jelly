@@ -17,3 +17,4 @@ Camera processing runs locally using the existing bundled MediaPipe model. There
 ## Publishing
 
 Continue using the existing GitHub repository and Cloudflare Pages project `palm-jelly`. GitHub updates and Cloudflare Direct Upload are separate operations. Keep the same production URL, https://palm-jelly.pages.dev/ .
+4. Ninth upload: fixed a module parsing error caught in browser QA; added an end-to-end state-machine test for palm recognition, required practice, paused movement, lost tracking, three-ring completion and return-home cleanup. Verified five tests and adjusted tablet-size header spacing.
