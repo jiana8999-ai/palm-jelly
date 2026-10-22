@@ -1,7 +1,8 @@
 import {RINGS,fitsRing} from './logic.js';
 import {OceanScene} from './scene.js';
+import {audio} from './audio.js';
 const $=id=>document.getElementById(id),scene=new OceanScene($('ocean'));
-let mode='home',paused=false,tracking=false,practiceDone=false,active=0,hold=0,handHold=0,last=0,velocity={x:0,y:0},jelly={x:0,y:0},target={x:0,y:0},rings=[],cameraStop=()=>{},cameraStart=()=>{},sound=null;
+let mode='home',paused=false,tracking=false,practiceDone=false,active=0,hold=0,handHold=0,last=0,velocity={x:0,y:0},jelly={x:0,y:0},target={x:0,y:0},rings=[],cameraStop=()=>{},cameraStart=()=>{},sound=audio;
 const trackedModes=()=>['hand','practice','playing'].includes(mode);
 function layout(){scene.resize();rings=mode==='practice'?[{x:scene.w*.68,y:scene.h*.57,r:84}]:RINGS.map((r,i)=>({x:r.x*scene.w,y:r.y*scene.h,r:[86,66,50][i]}));target.x=Math.max(45,Math.min(scene.w-45,target.x));target.y=Math.max(130,Math.min(scene.h-100,target.y));}
 function show(next){mode=next;document.body.dataset.screen=next;['welcome','setup','practice','result','hud'].forEach(id=>$(id).classList.add('hidden'));if(next==='home')$('welcome').classList.remove('hidden');if(['camera','hand'].includes(next)){$('setup').classList.remove('hidden');$('camera-card').classList.toggle('hidden',next!=='camera');$('hand-card').classList.toggle('hidden',next!=='hand');document.querySelectorAll('.steps li').forEach(li=>li.classList.toggle('active',li.dataset.step===next));}if(next==='practice')$('practice').classList.remove('hidden');if(next==='playing')$('hud').classList.remove('hidden');if(next==='won')$('result').classList.remove('hidden');layout();status('');}
